@@ -117,20 +117,24 @@ export default {
     getSearch(searchWord){
       this.searchTitle = [0];
       this.searchBody = [0];
-      var category = ''; // variable to ensure a category is used once
-      for(let d in this.jsonData){
-        // keywords to search for item
-        let keys = this.jsonData[d]['title'] + ' ' + this.jsonData[d]['keywords'];
-        // search for item in keys
-        let n = keys.search(searchWord);
 
-        if(n > -1){
-          // if item is found, ensure that category has not already been used
-          if(category.search(this.jsonData[d]['category']) == -1){
-            // save data to be displayed on html component
-            this.searchTitle.push(this.jsonData[d]['title']);
-            this.searchBody.push( $('<textarea />').html(this.jsonData[d]['body']).text());
-            category += (' '+this.jsonData[d]['category']);
+      var category = ''; // variable to ensure a category is used once
+
+      if(searchWord && searchWord.length > 2){
+        for(let d in this.jsonData){
+          // keywords to search for item
+          let keys = this.jsonData[d]['title'] + ' ' + this.jsonData[d]['keywords'];
+          // search for item in keys
+          let n = keys.search(searchWord);
+
+          if(n > -1){
+            // if item is found, ensure that category has not already been used
+            if(category.search(this.jsonData[d]['category']) == -1){
+              // save data to be displayed on html component
+              this.searchTitle.push(this.jsonData[d]['title']);
+              this.searchBody.push( $('<textarea />').html(this.jsonData[d]['body']).text());
+              category += (' '+this.jsonData[d]['category']);
+            }
           }
         }
       }
