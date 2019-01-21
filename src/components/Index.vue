@@ -17,32 +17,36 @@
         </div>
       </form>
 
-      <!-- Search Title and Body -->
-      <div class="row info" v-for="(c, index) in searchTitle.length-1" :key="index" >
+      <div v-if="searchItem">
 
-        <div class="col-sm-4">
-          <!--  Title-->
-          <div class="row">
-            <div class="col-sm-1">
-              <i class="far fa-star star" v-bind:class="{star_green: isActive}" @click="addFavourite(searchTitle[c], searchBody[c])"></i>
+
+        <!-- Search Title and Body -->
+        <div class="row info" v-for="(c, index) in searchTitle.length-1" :key="index" >
+
+          <div class="col-sm-4">
+            <!--  Title-->
+            <div class="row">
+              <div class="col-sm-1">
+                <i class="far fa-star star" v-bind:class="{star_green: isActive}" @click="addFavourite(searchTitle[c], searchBody[c])"></i>
+              </div>
+              <div class="col-sm-10">
+                <span>{{ searchTitle[c] }}</span>
+              </div>
             </div>
-            <div class="col-sm-10">
-              <span>{{ searchTitle[c] }}</span>
-            </div>
+          </div>
+
+          <div class="col-sm-7">
+            <!--  Body -->
+
+            <ul>
+              <span class="instruct">
+                <span v-html='searchBody[c]'></span>
+              </span>
+            </ul>
           </div>
         </div>
 
-        <div class="col-sm-7">
-          <!--  Body -->
-
-          <ul>
-            <span class="instruct">
-              <span v-html='searchBody[c]'></span>
-            </span>
-          </ul>
-        </div>
       </div>
-
     </div>
 
     <!-- Favourites -->
