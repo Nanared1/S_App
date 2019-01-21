@@ -3,6 +3,7 @@
     <h1 class="title">{{ title }}</h1>
     <div class="container">
 
+      <!-- Search box and button -->
       <form class="seachBox">
         <div class="row">
           <div class="col-sm-10 col-xs-6">
@@ -16,9 +17,11 @@
         </div>
       </form>
 
+      <!-- Search Title and Body -->
       <div class="row info" v-for="(c, index) in searchTitle.length-1" :key="index" >
+
         <div class="col-sm-4">
-          <!--  Bins-->
+          <!--  Title-->
           <div class="row">
             <div class="col-sm-1">
               <i class="far fa-star star" v-bind:class="{star_green: isActive}" @click="addFavourite(searchTitle[c], searchBody[c])"></i>
@@ -27,12 +30,10 @@
               <span>{{ searchTitle[c] }}</span>
             </div>
           </div>
-
-
         </div>
 
         <div class="col-sm-7">
-          <!--  Instructions-->
+          <!--  Body -->
 
           <ul>
             <span class="instruct">
@@ -44,7 +45,7 @@
 
     </div>
 
-
+    <!-- Favourites -->
     <div class="favs">
       <div class="container">
         <h3 id="favourites">Favourites</h3>
@@ -91,6 +92,7 @@
 </template>
 
 <script>
+// import Json file from data folder
 import db from '@/data/index'
 
 export default {
@@ -98,27 +100,30 @@ export default {
   data () {
     return {
       title: 'Toronto Waste Lookup',
-      searchItem: null,
+      searchItem: null, // value to retrieve search from html
       favourites: [[]],
       searchTitle: [0],
       searchBody : [0],
       jsonData : db,
-      isActive: false,
+      isActive: false, // check if the item is a Favourite. {{ not working well at the moment}}
     }
   },
   methods:{
+    // search Json file title and keywords to find appropriate data
     getSearch(searchWord){
       this.searchTitle = [0];
       this.searchBody = [0];
-      var category = '';
+      var category = ''; // variable to ensure a category is used once
       for(let d in this.jsonData){
-
+        // keywords to search for item
         let keys = this.jsonData[d]['title'] + ' ' + this.jsonData[d]['keywords'];
-
+        // search for item in keys
         let n = keys.search(searchWord);
 
         if(n > -1){
+          // if item is found, ensure that category has not already been used
           if(category.search(this.jsonData[d]['category']) == -1){
+            // save data to be displayed on html component
             this.searchTitle.push(this.jsonData[d]['title']);
             this.searchBody.push( $('<textarea />').html(this.jsonData[d]['body']).text());
             category += (' '+this.jsonData[d]['category']);
@@ -126,10 +131,12 @@ export default {
         }
       }
     },
+    // add trash to favourites
     addFavourite(sd, str){
       this.favourites.push([sd, str]);
       this.isActive = true;
     },
+    // remove trash from favourites
     removeFavourite(lst){
       this.favourites = this.favourites.filter( list => {
         return list !== lst;
@@ -137,6 +144,11 @@ export default {
       this.isActive = false;
     }
   }
+
+  // Fix
+  // - Favourite green * to be assigned to only favourites
+  // - change cursor to pointor when hovered over search button
+  // - item should not be in the Favourite twice or more
 }
 </script>
 
