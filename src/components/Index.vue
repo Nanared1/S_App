@@ -17,7 +17,7 @@
         </div>
       </form>
 
-      <div v-if="searchItem">
+      <div v-if="searchItem && searchItem.length > 2">
 
 
         <!-- Search Title and Body -->
