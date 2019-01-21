@@ -153,7 +153,7 @@ export default {
     }
   }
 
-  // Fix
+  // Fix 
   // - Favourite green * to be assigned to only favourites
   // - change cursor to pointor when hovered over search button
   // - item should not be in the Favourite twice or more
