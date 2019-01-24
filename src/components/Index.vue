@@ -47,6 +47,9 @@
         </div>
 
       </div>
+      <div v-else="">
+        <span>{{ clearSearch() }}</span>
+      </div>
     </div>
 
     <!-- Favourites -->
@@ -150,10 +153,15 @@ export default {
         return list !== lst;
       });
       this.isActive = false;
-    }
+    },
+    // clear prev search results
+    clearSearch(){
+      this.searchTitle = [0];
+      this.searchBody = [0];
+    },
   }
 
-  // Fix 
+  // Fix
   // - Favourite green * to be assigned to only favourites
   // - change cursor to pointor when hovered over search button
   // - item should not be in the Favourite twice or more
